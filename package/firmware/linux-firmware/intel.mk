@@ -270,3 +270,12 @@ define Package/i915-firmware-gsc/install
 	done
 endef
 $(eval $(call BuildPackage,i915-firmware-gsc))
+
+Package/ivpu-firmware = $(call Package/firmware-default,Intel VPU firmware,,LICENSE.intel_vpu)
+define Package/ivpu-firmware/install
+	$(INSTALL_DIR) $(1)/lib/firmware/intel/vpu
+	$(INSTALL_DATA) \
+	        $(PKG_BUILD_DIR)/intel/vpu/*.bin \
+	        $(1)/lib/firmware/intel/vpu
+endef
+$(eval $(call BuildPackage,ivpu-firmware))
