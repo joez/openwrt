@@ -503,27 +503,10 @@ endef
 
 $(eval $(call KernelPackage,drm-i915))
 
-define KernelPackage/drm-accel
-  SUBMENU:=$(VIDEO_MENU)
-  TITLE:=Compute Acceleration Framework
-  KCONFIG:=CONFIG_DRM_ACCEL=y \
-	CONFIG_DRM_ACCEL_HABANALABS=n \
-	CONFIG_DRM_ACCEL_IVPU=n \
-	CONFIG_DRM_ACCEL_QAIC=n
-  FILES:=
-  AUTOLOAD:=
-endef
-
-define KernelPackage/drm-accel/description
-  Enables the Compute Acceleration Framework for accelerators
-endef
-
-$(eval $(call KernelPackage,drm-accel))
-
 define KernelPackage/drm-ivpu
   SUBMENU:=$(VIDEO_MENU)
   TITLE:=Intel VPU DRM support
-  DEPENDS:=@TARGET_x86_64 +kmod-drm-accel +ivpu-firmware
+  DEPENDS:=@TARGET_x86_64 +ivpu-firmware
   KCONFIG:=CONFIG_DRM_ACCEL_IVPU
   FILES:=$(LINUX_DIR)/drivers/accel/ivpu/intel_vpu.ko
   AUTOLOAD:=$(call AutoProbe,intel_vpu)
